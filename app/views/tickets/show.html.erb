@@ -25,5 +25,15 @@
   <%= @ticket.email_address %>
 </p>
 
+<p>
+  <strong>Phone:</strong>
+  <%= @ticket.phone %>
+</p>
+
+<p>
+  <strong>Event:</strong>
+  <%= @ticket.event.try(:artist) %>
+</p>
+
 <%= link_to 'Edit', edit_ticket_path(@ticket) %> |
 <%= link_to 'Back', tickets_path %>
