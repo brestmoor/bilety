@@ -1,4 +1,4 @@
-<%= form_with(model: ticket, local: true) do |form| %>
+<%= bootstrap_form_for(ticket) do |form| %>
   <% if ticket.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
@@ -12,39 +12,37 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
     <%= form.text_field :name, id: :ticket_name %>
   </div>
 
   <div class="field">
-    <%= form.label :address %>
     <%= form.text_area :address, id: :ticket_address %>
   </div>
 
   <div class="field">
-    <%= form.label :price %>
     <%= form.text_field :price, id: :ticket_price %>
   </div>
 
   <div class="field">
-    <%= form.label :email_address %>
     <%= form.text_field :email_address, id: :ticket_email_address %>
   </div>
 
   <div class="field">
-    <%= form.label :phone %>
     <%= form.text_field :phone, id: :ticket_phone %>
   </div>
 
   <div class="field">
-    <%= form.label :seat_id_seq %>
     <%= form.text_field :seat_id_seq, id: :ticket_seat_id_seq %>
   </div>
 
 
   <% if ticket.new_record? %>
     <div class="field">
-      <%= form.collection_select(:event_id, Event.all, :id, :artist, {}, {:onchange => "alert()"}) %>
+      <select class="form-control" name="ticket[event_id]" id="ticket_event_id" onchange="insertPriceLowAndHigh(this)">
+        <% for event in Event.all %>
+          <option value="<%= event.id %>" data-price-high="<%= event.price_high %>" data-price-low="<%= event.price_low %>"><%= event.artist %></option>
+        <% end %>
+      </select>
     </div>
   <% else %>
     <div class="field">

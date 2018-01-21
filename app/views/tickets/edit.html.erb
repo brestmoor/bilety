@@ -1,4 +1,4 @@
-<p id="komunikat"><%= flash[:komunikat] %></p>
+<p id="komunikat" class="<%= flash[:class] %>"><%= flash[:komunikat] %></p>
 <h1>Editing Ticket</h1>
 
 <%= render 'form', ticket: @ticket %>

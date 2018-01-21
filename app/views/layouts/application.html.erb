@@ -16,11 +16,14 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
+      <a href="/tickets" class="nav-link">Tickets</a>
+      <a href="/events" class="nav-link">Events</a>
       <% if user_signed_in? %>
-        <%= current_user.email %>
-        <%= link_to 'Edit profile', edit_user_registration_path, :class => 'nav-item nav-link' %>
+        <a href="/accounts/edit" class="nav-link">Account</a>
+
+        <%= link_to 'Edit profile (' + current_user.email + ')', edit_user_registration_path, :class => 'nav-item nav-link' %>
         <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'nav-item nav-link'  %>
-      <% else %>
+    <% else %>
         <%= link_to "Sign up", new_user_registration_path, :class => 'nav-item nav-link'  %>
         <%= link_to "Login", new_user_session_path, :class => 'nav-item nav-link'  %>
       <% end %>

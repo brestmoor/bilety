@@ -1,10 +1,25 @@
-<h1>Wszystkie wydarzenia</h1>
-
-<ul>
-  <% for event in @events %>
-    <li><%= link_to event.artist, "/events/#{event.id}" %> <%= event.event_date < Date.today ? 'Archive' : '' %></li>
+<div><h2 class="margin-top">All events</h2>
+<br>
+  <% (0..@events.count).step(5) do |i| %>
+    <% for event in @events[i..i + 4] %>
+      <div class="card card-inline" style="width: 19%">
+        <div class="card-header">
+          <b><%= event.artist %></b> <%= event.event_date < Date.today ? 'Archive' : '' %>
+        </div>
+        <div class="card-body">
+          <%= event.description %>
+          <br>
+          <br>
+          <%= event.event_date %>
+          <br>
+          <br>
+          <%= link_to 'See more', "/events/#{event.id}" %>
+        </div>
+      </div>
+    <% end %>
+    <br>
+    <br>
   <% end %>
-</ul>
-<% if user_signed_in? && current_user.admin %>
-  <%= link_to 'Nowe ogłoszenie', new_event_path %>
-<% end %>
+  <% if user_signed_in? && current_user.admin %>
+    <%= link_to 'Nowe ogłoszenie', new_event_path %>
+  <% end %></div>

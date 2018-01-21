@@ -1,4 +1,4 @@
-<p id="komunikat"><%= flash[:komunikat] %></p>
+<p id="komunikat" class="<%= flash[:class] %>"><%= flash[:komunikat] %></p>
 <div class="card">
   <div class="card-body"><p>
     <strong>Name:</strong>
@@ -58,7 +58,9 @@
 
 
 <%= render "new_ticket", ticket: @ticket %>
-<%= render "tickets_list", tickets: Ticket.where(event_id: @event.id) %>
+<%= render "tickets_list", tickets: Ticket.where('tickets.event_id = ? and tickets.user_id = ?', @event.id, current_user) %>
 
-<%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-link' %>
+<% if user_signed_in? && current_user.admin %>
+  <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-link' %>
+<% end %>
 <%= link_to 'Back', events_path, class: 'btn btn-link' %>

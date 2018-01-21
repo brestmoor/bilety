@@ -52,3 +52,6 @@ gem 'bootstrap', '~> 4.0.0.beta3'
 gem 'devise', '~> 4.4'
 gem 'jquery-rails', '~> 4.3.1'
 gem 'bcrypt', platforms: :ruby
+gem "bootstrap_form",
+    git: "https://github.com/bootstrap-ruby/rails-bootstrap-forms.git",
+    branch: "master"

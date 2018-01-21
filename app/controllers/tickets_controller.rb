@@ -161,6 +161,7 @@ class TicketsController < ApplicationController
   private
   def redirect_go_back(message)
     flash[:komunikat] = message
+    flash[:class] = 'alert alert-danger'
     redirect_back fallback_location: ''
   end
 

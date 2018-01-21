@@ -3,18 +3,19 @@
 <h1>Tickets</h1>
 
 
-<%= form_tag("/tickets", method: "get", class:'inline-block') do %>
-  <%= label_tag(:date_from, "From date:", class: 'inline') %>
-  <%= date_field_tag(:date_from) %>
-  <%= label_tag(:date_to, "To date:", class: 'inline') %>
-  <%= date_field_tag(:date_to) %>
-  <%= submit_tag("Search", class: 'inline') %>
-<% end %>
-<%= form_tag("/tickets", method: "get", class:'inline-block') do %>
-  <%= button_to("Show all") %>
-<% end %>
-
-<table>
+<div class="inline-block"><%= form_tag("/tickets", method: "get", class: 'form-inline') do %>
+    <%= label_tag(:date_from, "From date:", class: 'inline margin-right') %>
+    <%= date_field_tag(:date_from, {}, class: 'form-control form-control-sm margin-right') %>
+    <%= label_tag(:date_to, "To date:", class: 'inline margin-right') %>
+    <%= date_field_tag(:date_to, {}, class: 'form-control form-control-sm margin-right') %>
+    <%= submit_tag("Search", class: 'inline btn btn-primary btn-sm margin-right') %>
+  <% end %>
+</div>
+  <%= form_tag("/tickets", method: "get", class: 'inline-block') do %>
+    <%= button_to("Show all", {}, class: 'btn btn-primary btn-sm') %>
+  <% end %>
+<br><br>
+<table class="table table-hover">
   <thead>
   <tr>
     <th>Name</th>

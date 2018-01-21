@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<div style="margin-bottom: 40px;">
 <p>
   <strong>Name:</strong>
   <%= @ticket.name %>
@@ -33,7 +33,7 @@
 <p>
   <strong>Event:</strong>
   <%= @ticket.event.try(:artist) %>
-</p>
+</p></div>
 
 <%= link_to 'Edit', edit_ticket_path(@ticket)%>
 <%= link_to 'Back', tickets_path %>

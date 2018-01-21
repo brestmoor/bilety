@@ -1,6 +1,6 @@
 <% if user_signed_in? %>
 
-  <%= form_with(model: ticket, local: true) do |form| %>
+  <%= bootstrap_form_for(ticket) do |form| %>
     <% if ticket.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
@@ -30,12 +30,10 @@
     </div></div>
 
     <div class="field">
-      <%= form.label :name %>
       <%= form.text_field :name, id: :ticket_name, class: 'form-control' %>
     </div>
 
     <div class="field">
-      <%= form.label :address %>
       <%= form.text_area :address, id: :ticket_address, class: 'form-control' %>
     </div>
 
@@ -44,17 +42,14 @@
         <%= form.hidden_field :price, :value => ticket.event.increased_price %>
       </div>
     <% else %>
-      <%= form.label :price %>
       <%= form.text_field :price, id: :ticket_price , class: 'form-control'%>
     <% end %>
 
     <div class="field">
-      <%= form.label :email_address %>
       <%= form.text_field :email_address, id: :ticket_email_address , class: 'form-control'%>
     </div>
 
     <div class="field">
-      <%= form.label :phone %>
       <%= form.text_field :phone, id: :ticket_phone, class: 'form-control' %>
     </div>
 
@@ -67,7 +62,7 @@
     </div>
 
     <div class="actions">
-      <input type="submit" value="Submit" onclick="setSeatsAsFormParam()" class="btn btn-link">
+      <input type="submit" value="Submit" onclick="setSeatsAsFormParam()" class="btn btn-primary">
     </div>
 
   <% end %>
