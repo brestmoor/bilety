@@ -25,6 +25,36 @@ class Event < ApplicationRecord
     price_high * 120.0 / 100
   end
 
+  def description_short
+    return cut_text description
+  end
+
+  def cut_text(tekst)
+    if tekst.length <= 30
+      tekst
+    else
+      cut(tekst)
+    end
+  end
+
+  def cut(tekst)
+    words = tekst.split(' ')
+
+    length = 0
+    final_word = ''
+    for i in 0..words.length-1
+      if length + 1 + words[i].length + 3 > 25;
+        final_word << '...'
+        break
+      else
+        final_word << ' ' + words[i]
+        length += words[i].length + 1
+      end
+    end
+
+    final_word
+  end
+
   def empty
     if !rows || rows.empty?
       return true
