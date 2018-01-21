@@ -1,30 +1,64 @@
-<p id="komunikat"><%= flash[:komunikat]  %></p>
-<p>
-  <strong>Name:</strong>
-  <%= @event.artist %>
-</p>
+<p id="komunikat"><%= flash[:komunikat] %></p>
+<div class="card">
+  <div class="card-body"><p>
+    <strong>Name:</strong>
+    <%= @event.artist %>
+  </p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @event.description %>
-</p>
+    <p>
+      <strong>Description:</strong>
+      <%= @event.description %>
+    </p>
 
-<p>
-  <strong>Price low:</strong>
-  <%= @event.price_low %>
-</p>
+    <% if @event.event_date.to_date == Date.today %>
+      <p>
+        <strong>Price: </strong>
+        <%= @event.increased_price %>
+      </p>
+    <% else %>
+      <p>
+        <strong>Price low:</strong>
+        <%= @event.price_low %>
+      </p>
 
-<p>
-  <strong>Price high:</strong>
-  <%= @event.price_high %>
-</p>
+      <p>
+        <strong>Price high:</strong>
+        <%= @event.price_high %>
+      </p>
+    <% end %>
 
-<p>
-  <strong>Event date:</strong>
-  <%= @event.event_date %>
-</p>
+    <p>
+      <strong>Event date:</strong>
+      <%= @event.event_date %>
+    </p>
 
-<%= render "new_ticket",  ticket: Ticket.new( :event_id=>@event.id) %>
-<%= render "tickets_list",  tickets: Ticket.where(event_id: @event.id) %>
+    <p>
+      <strong>Adults only:</strong>
+      <%= @event.adults_only %>
+    </p>
+  </div>
+</div>
 
-<%= link_to 'Back', events_path %>
+<div class="flex-container">
+  <% if not user_signed_in? %>
+    <p>
+      <br>
+      <% for row in @event.rows %>
+        <%= row.row_number %>
+        <% for seat in row.seats %>
+          <button class="btn btn-primary square" type="button" <%= seat.occupied ? 'disabled' : '' %> value="<%= row.row_number.to_s + seat.seat_number.to_s %>">
+            <%= row.row_number.to_s + seat.seat_number.to_s %>
+          </button>
+        <% end %>
+        <br><br>
+      <% end %>
+    </p>
+  <% end %></div>
+
+
+
+<%= render "new_ticket", ticket: @ticket %>
+<%= render "tickets_list", tickets: Ticket.where(event_id: @event.id) %>
+
+<%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-link' %>
+<%= link_to 'Back', events_path, class: 'btn btn-link' %>

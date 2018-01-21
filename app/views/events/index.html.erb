@@ -2,7 +2,9 @@
 
 <ul>
   <% for event in @events %>
-    <li><%= link_to event.artist, "/events/#{event.id}" %></li>
-<% end %>
+    <li><%= link_to event.artist, "/events/#{event.id}" %> <%= event.event_date < Date.today ? 'Archive' : '' %></li>
+  <% end %>
 </ul>
-<%= link_to 'Nowe ogłoszenie', new_event_path %>
+<% if user_signed_in? && current_user.admin %>
+  <%= link_to 'Nowe ogłoszenie', new_event_path %>
+<% end %>

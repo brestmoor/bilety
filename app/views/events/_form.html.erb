@@ -36,6 +36,23 @@
     <%= form.date_field :event_date, id: :event_event_date %>
   </div>
 
+  <% if event.empty%>
+    <div class="field">
+      <%= form.label :rows %>
+      <%= form.number_field :rows, id: :rows %>
+    </div>
+
+    <div class="field">
+      <%= form.label :seats_in_row %>
+      <%= form.number_field :seats_in_row, id: :seats_in_row %>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :adults_only %>
+    <%= form.check_box :adults_only %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

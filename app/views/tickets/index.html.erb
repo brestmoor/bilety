@@ -2,21 +2,36 @@
 
 <h1>Tickets</h1>
 
+
+<%= form_tag("/tickets", method: "get", class:'inline-block') do %>
+  <%= label_tag(:date_from, "From date:", class: 'inline') %>
+  <%= date_field_tag(:date_from) %>
+  <%= label_tag(:date_to, "To date:", class: 'inline') %>
+  <%= date_field_tag(:date_to) %>
+  <%= submit_tag("Search", class: 'inline') %>
+<% end %>
+<%= form_tag("/tickets", method: "get", class:'inline-block') do %>
+  <%= button_to("Show all") %>
+<% end %>
+
 <table>
   <thead>
-    <tr>
-      <th>Name</th>
-      <th>Seat id seq</th>
-      <th>Address</th>
-      <th>Price</th>
-      <th>Email address</th>
-      <th>Phone</th>
-      <th colspan="3"></th>
-    </tr>
+  <tr>
+    <th>Name</th>
+    <th>Seats</th>
+    <th>Address</th>
+    <th>Price</th>
+    <th>Email address</th>
+    <th>Phone</th>
+    <th>Event date</th>
+    <th>Artist</th>
+    <th colspan="2"></th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @tickets.each do |ticket| %>
+  <% @tickets.each do |ticket| %>
+    <% if user_signed_in? && (ticket.try(:user) == current_user || current_user.admin) %>
       <tr>
         <td><%= ticket.name %></td>
         <td><%= ticket.seat_id_seq %></td>
@@ -24,12 +39,16 @@
         <td><%= ticket.price %></td>
         <td><%= ticket.email_address %></td>
         <td><%= ticket.phone %></td>
-        <td><%= ticket.event.try(:artist)%></td>
+        <td><%= ticket.event.event_date %></td>
+        <td><%= link_to ticket.event.artist.to_s, event_path(ticket.event) %></td>
         <td><%= link_to 'Show', ticket %></td>
         <td><%= link_to 'Edit', edit_ticket_path(ticket) %></td>
-        <td><%= link_to 'Destroy', ticket, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if current_user.admin %>
+          <td><%= link_to 'Destroy', ticket, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+        <% end %>
       </tr>
     <% end %>
+  <% end %>
   </tbody>
 </table>
 

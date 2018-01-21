@@ -1,0 +1,20 @@
+<%= form_with(model: @account, local: true) do |form| %>
+  <p id="komunikat"><%= flash[:komunikat]  %></p>
+  <h1>Recharge your account</h1>
+
+  <div class="field">
+    <b>Current amount:</b>
+    <%= @account.balance %>
+  </div>
+
+  <div class="field">
+    <%= form.label :recharge_amount %>
+    <%= form.text_field :recharge_amount, id: :recharge_amount %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+
+
+<% end %>

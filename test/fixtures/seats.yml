@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  row: one
+  occupied: false
+
+two:
+  row: two
+  occupied: false

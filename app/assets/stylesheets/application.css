@@ -13,3 +13,22 @@
  *= require_tree .
  *= require_self
  */
+.flex-container {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-link {
+    font-size: 0.9rem;
+}
+
+#error_explanation {
+    border-radius: 5px;
+    width: 100%;
+    background-color: white;
+}
+
+.field_with_errors {
+    border-radius: 5px;
+    display: inherit;
+}
