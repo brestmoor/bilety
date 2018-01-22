@@ -34,6 +34,7 @@ class EventsController < ApplicationController
 
     if @event.save
       flash[:komunikat] = 'Event został poprawnie stworzony.'
+      flash[:class] = 'alert alert-success'
       redirect_to "/events/#{@event.id}"
     else
       render 'new'

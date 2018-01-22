@@ -1,4 +1,4 @@
-<%= form_with(model: event, local: true) do |form| %>
+<%= bootstrap_form_for(event) do |form| %>
   <% if event.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(event.errors.count, "error") %> prohibited this ticket from being saved:</h2>
@@ -12,44 +12,37 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :artist %>
     <%= form.text_field :artist, id: :event_artist %>
   </div>
 
   <div class="field">
-    <%= form.label :description %>
     <%= form.text_field :description, id: :event_description %>
   </div>
 
   <div class="field">
-    <%= form.label :price_low %>
     <%= form.text_field :price_low, id: :event_price_low %>
   </div>
 
   <div class="field">
-    <%= form.label :price_high %>
     <%= form.text_field :price_high, id: :event_price_high %>
   </div>
 
   <div class="field">
-    <%= form.label :event_date %>
     <%= form.date_field :event_date, id: :event_event_date %>
   </div>
 
   <% if event.empty%>
     <div class="field">
-      <%= form.label :rows %>
       <%= form.number_field :rows, id: :rows %>
     </div>
 
     <div class="field">
       <%= form.label :seats_in_row %>
-      <%= form.number_field :seats_in_row, id: :seats_in_row %>
+      <input type="number" id="seats_in_row" name="event[seats_in_row]" class="form-control"/>
     </div>
   <% end %>
 
   <div class="field">
-    <%= form.label :adults_only %>
     <%= form.check_box :adults_only %>
   </div>
 

@@ -12,6 +12,7 @@ class AccountsController < ApplicationController
    @account.balance += recharge.to_f
    if @account.save
      flash[:komunikat] = 'Your account was recharged.'
+     flash[:class] = 'alert alert-danger'
      redirect_to '/accounts/edit'
    end
  end

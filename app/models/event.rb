@@ -30,7 +30,7 @@ class Event < ApplicationRecord
   end
 
   def cut_text(tekst)
-    if tekst.length <= 30
+    if !tekst || tekst.length <= 30
       tekst
     else
       cut(tekst)
