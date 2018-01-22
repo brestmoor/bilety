@@ -149,11 +149,12 @@ class TicketsController < ApplicationController
   def destroy
     @ticket.destroy
     day_diff = Utils.days_til_now(@ticket.event.event_date)
-    @ticket.user.account.balance += @ticket.price * (day_diff / 30.0) * 60.0 / 100
+    prev_balance = @ticket.user.account.balance.to_i
+    @ticket.user.account.balance += @ticket.price * @ticket.seat_id_seq.split(',').count * (-day_diff / 30.0) * 60.0 / 100
     @ticket.user.account.save
     make_seats_free(@ticket, @ticket.seat_id_seq)
     respond_to do |format|
-      format.html {redirect_back fallback_location: '', notice: 'Ticket was successfully destroyed.'}
+      format.html {redirect_back fallback_location: '', notice: "Ticket was successfully destroyed. Returned #{@ticket.user.account.balance - prev_balance}"}
       format.json {head :no_content}
     end
   end
@@ -162,7 +163,13 @@ class TicketsController < ApplicationController
   def redirect_go_back(message)
     flash[:komunikat] = message
     flash[:class] = 'alert alert-danger'
-    redirect_back fallback_location: ''
+
+    if request.env['HTTP_REFERER'].include? 'events'
+      redirect_back fallback_location: ''
+    else
+      render :new
+    end
+
   end
 
   def balance_invalid(user, price)
