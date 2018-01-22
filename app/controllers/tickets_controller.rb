@@ -133,7 +133,7 @@ class TicketsController < ApplicationController
       end
 
       if @ticket.update(ticket_params)
-        current_user.account.balance += (prev_price - ticket_params['price'].to_f)
+        current_user.account.balance += (prev_price - ticket_params['price'].to_f) * ticket_params['seat_id_seq'].split(',').count
         current_user.account.save
         format.html {redirect_to @ticket, notice: 'Ticket was successfully updated.'}
         format.json {render :show, status: :ok, location: @ticket}
