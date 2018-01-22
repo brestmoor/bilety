@@ -122,18 +122,23 @@ class TicketsController < ApplicationController
     respond_to do |format|
       prev_price = @ticket.price
 
-      if amount_invalid(ticket_params['price'].to_f, @ticket.event)
+      new_price = ticket_params['price'].to_f
+      if amount_invalid(new_price, @ticket.event)
         redirect_go_back('Price needs to be between price low and price high')
         return
       end
 
-      if balance_invalid(current_user, -(prev_price - ticket_params['price'].to_f))
+      if balance_invalid(current_user, -(prev_price - new_price))
         redirect_go_back('Not enough funds.')
         return
       end
 
+      old_number_of_tickets = @ticket.seat_id_seq.split(',').count
+
       if @ticket.update(ticket_params)
-        current_user.account.balance += (prev_price - ticket_params['price'].to_f) * ticket_params['seat_id_seq'].split(',').count
+        new_number_of_tickets = ticket_params['seat_id_seq'].split(',').count
+        difference_in_tickets = new_number_of_tickets - old_number_of_tickets
+        current_user.account.balance += ((prev_price - new_price) * new_number_of_tickets) - (difference_in_tickets * new_price)
         current_user.account.save
         format.html {redirect_to @ticket, notice: 'Ticket was successfully updated.'}
         format.json {render :show, status: :ok, location: @ticket}
